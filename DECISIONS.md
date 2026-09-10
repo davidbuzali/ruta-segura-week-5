@@ -42,3 +42,17 @@ Scaffold the smallest Vercel-ready React and TypeScript application, then implem
 ### Tomorrow's first move
 
 Build the six-section operator workflow around the tested gate, add bounded editing and issue-focused navigation, then create Vercel deployment 1.
+
+## 2026-09-10 - Working operator flow
+
+- Built one working surface rather than a marketing page; the active case, STOP/readiness result, and first unresolved condition appear immediately.
+- Used two invented fixtures so the demonstration can show both an unsafe configuration and a structurally complete case awaiting human confirmation.
+- Kept editing bounded to typed fields, allowlisted selects, checkboxes, and length-limited notes; there is no upload or raw prompt.
+- Added a deterministic simulated-AI summary that mirrors exact blocker identifiers, flags contradictions, and cannot change the rule result.
+- Added an in-session next-action assignment and audit trail without persistent storage.
+- Required explicit human confirmation after every structural issue is resolved.
+- Preserved the shadow clause in the working interface and kept attendance distinct from treatment closure.
+
+### Tomorrow's first move
+
+Run the documented mechanical pass against Vercel deployment 1, capture the first genuine defect, fix it with a regression test, and redeploy in a separate commit.

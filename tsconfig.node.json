@@ -14,6 +14,7 @@
     "tests",
     "src/types.ts",
     "src/gate.ts",
-    "src/fixtures.ts"
+    "src/fixtures.ts",
+    "src/simulatedAi.ts"
   ]
 }
