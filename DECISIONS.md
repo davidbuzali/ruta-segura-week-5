@@ -28,3 +28,17 @@ Review and approve the packet's exact user, success definition, six required gat
 ### Tomorrow's first move
 
 Scaffold the smallest Vercel-ready React and TypeScript application, then implement the typed readiness schema and pure fail-closed gate rules with automated tests before building the interface.
+
+## 2026-09-10 - Typed gate foundation
+
+- Selected a static Vite, React, and TypeScript application for simple Vercel deployment without a server or secrets.
+- Modeled the six readiness sections separately so each can expose evidence, verifier, freshness, and a text status.
+- Implemented the gate as a pure function accepting unknown input so malformed runtime data fails closed.
+- Defined evidence as current through exactly 72 hours; future timestamps and anything older are invalid or stale.
+- Required the full care episode, zero patient contribution, downstream plan, tail-risk guarantor, and exceeded-coverage escalation.
+- Added blocked and complete invented fixtures without any real personal or clinical data.
+- Kept the commit's interface minimal so the working operator flow remains a distinct, reviewable change.
+
+### Tomorrow's first move
+
+Build the six-section operator workflow around the tested gate, add bounded editing and issue-focused navigation, then create Vercel deployment 1.
