@@ -15,3 +15,16 @@
 ### Tomorrow's first move
 
 Review and approve the packet's exact user, success definition, six required gate sections, and benchmark. After approval, turn the packet into `docs/IMPLEMENTATION_PROMPT.md` before writing product code.
+
+## 2026-09-10 - Implementation prompt session
+
+- Treated the packet as approved after David confirmed the first step and asked to continue.
+- Translated the six packet sections into explicit fields and fail-closed rules.
+- Kept the deterministic TypeScript gate as the sole decision authority; simulated AI may summarize and flag contradictions only.
+- Defined readiness as permission for a synthetic course simulation, never live screening.
+- Expanded the history to six planned commits so the packet, implementation prompt, core logic, first deployment, mechanical fix, and persona fix remain visible.
+- Confirmed two Vercel deployments: the first after the working operator flow and the second after mechanical and persona fixes.
+
+### Tomorrow's first move
+
+Scaffold the smallest Vercel-ready React and TypeScript application, then implement the typed readiness schema and pure fail-closed gate rules with automated tests before building the interface.
