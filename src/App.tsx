@@ -137,6 +137,7 @@ function EvidenceFields({ evidence, onChange, onCommit }: {
 export default function App() {
   const evaluationTime = useRef(new Date());
   const eventSequence = useRef(2);
+  const aiRequestSequence = useRef(0);
   const [cases, setCases] = useState<Record<string, PilotCase>>(() => createInitialCases(evaluationTime.current));
   const [activeCaseId, setActiveCaseId] = useState("SYN-CDMX-STOP-001");
   const [activeSection, setActiveSection] = useState<EditableSection>("funding");
@@ -161,9 +162,14 @@ export default function App() {
     setAudit((current) => [nextEvent, ...current].slice(0, 12));
   }
 
-  function resetDerivedState() {
+  function invalidateAiOutput() {
+    aiRequestSequence.current += 1;
     setAiState("idle");
     setAiSummary(null);
+  }
+
+  function resetDerivedState() {
+    invalidateAiOutput();
     setAssignedAction(null);
     setActionError("");
   }
@@ -174,8 +180,7 @@ export default function App() {
       const updatedSection = { ...current[section], ...patch };
       return { ...currentCases, [activeCaseId]: { ...current, [section]: updatedSection, humanConfirmed: false } as PilotCase };
     });
-    setAiState("idle");
-    setAiSummary(null);
+    invalidateAiOutput();
   }
 
   function updateEvidence(section: EditableSection, patch: Partial<EvidenceRecord>) {
@@ -187,8 +192,7 @@ export default function App() {
         [activeCaseId]: { ...current, [section]: { ...sectionValue, evidence: { ...sectionValue.evidence, ...patch } }, humanConfirmed: false } as PilotCase,
       };
     });
-    setAiState("idle");
-    setAiSummary(null);
+    invalidateAiOutput();
   }
 
   function commitField(label: string) {
@@ -211,9 +215,11 @@ export default function App() {
   }
 
   function runSimulatedAi() {
+    const requestId = ++aiRequestSequence.current;
     setAiState("loading");
     setAiSummary(null);
     window.setTimeout(() => {
+      if (aiRequestSequence.current !== requestId) return;
       setAiSummary(generateSimulatedAiSummary(result));
       setAiState("ready");
       addAudit("Resumen simulado con IA generado para revisión humana.");
@@ -245,8 +251,7 @@ export default function App() {
       ...currentCases,
       [activeCaseId]: { ...currentCases[activeCaseId], humanConfirmed: confirmed },
     }));
-    setAiState("idle");
-    setAiSummary(null);
+    invalidateAiOutput();
     addAudit(confirmed ? "Confirmación humana registrada." : "Confirmación humana retirada.");
   }
 
