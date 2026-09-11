@@ -80,6 +80,7 @@ The after-fix production build also passed a 390 × 844 browser check. The full-
 
 ## Deployment status
 
-- Deployment 1 is reachable and preserves the recorded before-fix defect for evidence.
-- The fix has passed locally but has not yet been committed, pushed, or redeployed.
-- After the next deployment, rerun `scripts/mechanical-test.cjs` against the production URL and record the resulting Vercel URL here.
+- Deployment 1 remains preserved in the before-fix screenshots.
+- Commit `db1bfc3` was pushed to GitHub and produced Vercel production deployment <https://week-5-ruta-segura-hav83btav-davidbuzali.vercel.app>.
+- The stable public alias is <https://week-5-ruta-segura.vercel.app>.
+- The complete browser regression, including the rapid edit race and 390 px mobile smoke check, passed against the stable production alias after deployment.

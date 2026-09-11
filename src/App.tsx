@@ -170,6 +170,9 @@ export default function App() {
 
   function resetDerivedState() {
     invalidateAiOutput();
+    setOwner(OWNER_OPTIONS[0]);
+    setAction(ACTION_OPTIONS[0]);
+    setNote("");
     setAssignedAction(null);
     setActionError("");
   }
@@ -360,7 +363,7 @@ export default function App() {
 
         <aside className="decision-column" aria-label="Decisión y acciones">
           <section className={`decision-card decision-${result.decision}`} aria-live="polite">
-            <p className="eyebrow">Decisión de arranque</p><h2>{result.decision === "stop" ? "DETENER PILOTO" : "LISTO PARA SIMULACIÓN"}</h2><p className="decision-warning">{result.warning}</p>
+            <p className="eyebrow">Decisión de arranque</p><h2>{result.decision === "stop" ? "DETENER PILOTO" : "LISTO PARA SIMULACIÓN DEL PILOTO"}</h2><p className="decision-warning">{result.warning}</p>
             {result.issues.length > 0 ? <ol className="issue-list">{result.issues.slice(0, 5).map((issue) => <li key={`${issue.field}-${issue.code}`}><strong>{issue.field}</strong><span>{issue.message}</span></li>)}</ol> : <p className="all-clear">Todas las condiciones pasaron las reglas transparentes.</p>}
             {result.issues.length > 5 && <p className="more-issues">+ {result.issues.length - 5} condiciones adicionales</p>}
             <button type="button" className="primary-button" onClick={openFirstIssue} disabled={structuralIssues.length === 0}>Revisar primera condición</button>
@@ -376,15 +379,22 @@ export default function App() {
             <button type="button" className="secondary-button" onClick={runSimulatedAi} disabled={aiState === "loading"}>Generar resumen simulado con IA</button>
           </section>
 
-          <form className="action-card" onSubmit={assignNextAction}>
-            <h3>Asignar siguiente acción</h3>
-            <label className="field"><span>Responsable</span><select value={owner} onChange={(event) => setOwner(event.target.value)}>{OWNER_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
-            <label className="field"><span>Acción</span><select value={action} onChange={(event) => setAction(event.target.value)}>{ACTION_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
-            <label className="field"><span>Nota breve</span><textarea value={note} maxLength={MAX_NOTE_LENGTH} onChange={(event) => setNote(event.target.value)} placeholder="Qué debe verificarse antes de reevaluar" /><small>{note.length}/{MAX_NOTE_LENGTH}</small></label>
-            {actionError && <p className="form-error" role="alert">{actionError}</p>}
-            <button type="submit" className="secondary-button">Guardar acción</button>
-            {assignedAction && <p className="assigned-action"><strong>{assignedAction.action}</strong> · {assignedAction.owner}<br />{assignedAction.note}</p>}
-          </form>
+          {structuralIssues.length > 0 ? (
+            <form className="action-card" onSubmit={assignNextAction}>
+              <h3>Asignar siguiente acción</h3>
+              <label className="field"><span>Responsable</span><select value={owner} onChange={(event) => setOwner(event.target.value)}>{OWNER_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
+              <label className="field"><span>Acción</span><select value={action} onChange={(event) => setAction(event.target.value)}>{ACTION_OPTIONS.map((item) => <option key={item}>{item}</option>)}</select></label>
+              <label className="field"><span>Nota breve</span><textarea value={note} maxLength={MAX_NOTE_LENGTH} onChange={(event) => setNote(event.target.value)} placeholder="Qué debe verificarse antes de reevaluar" /><small>{note.length}/{MAX_NOTE_LENGTH}</small></label>
+              {actionError && <p className="form-error" role="alert">{actionError}</p>}
+              <button type="submit" className="secondary-button">Guardar acción</button>
+              {assignedAction && <p className="assigned-action"><strong>{assignedAction.action}</strong> · {assignedAction.owner}<br />{assignedAction.note}</p>}
+            </form>
+          ) : (
+            <section className="action-card action-clear" aria-label="Siguiente paso">
+              <h3>Siguiente paso</h3>
+              <p>{pilot.humanConfirmed ? "No hay acciones correctivas pendientes para este caso sintético." : "Las seis condiciones están verificadas. Completa la confirmación humana para habilitar la simulación."}</p>
+            </section>
+          )}
 
           <section className="confirmation-card"><label className="check-row"><input type="checkbox" checked={pilot.humanConfirmed} disabled={structuralIssues.length > 0} onChange={(event) => toggleHumanConfirmation(event.target.checked)} /><span>Confirmo que revisé las seis condiciones y su evidencia.</span></label>{structuralIssues.length > 0 && <small>Resuelve {structuralIssues.length} condiciones estructurales antes de confirmar.</small>}</section>
         </aside>
