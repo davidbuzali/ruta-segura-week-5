@@ -31,6 +31,12 @@ async function capture(page, filename, locator) {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
     await page.goto(targetUrl, { waitUntil: "networkidle" });
 
+    await page.getByText("Compromiso de financiamiento", { exact: true }).waitFor();
+    await page.getByText("Referencia técnica: funding.fundingStatus", { exact: true }).waitFor();
+    if (await page.locator(".issue-list strong", { hasText: "funding.fundingStatus" }).count()) {
+      throw new Error("The decision card still presents an internal field path as its primary label.");
+    }
+
     await capture(page, "01-incomplete-case.png");
 
     await page.getByLabel("Estado del financiamiento").selectOption("committed");
@@ -39,6 +45,9 @@ async function capture(page, filename, locator) {
 
     await page.getByRole("button", { name: "Generar resumen simulado con IA" }).click();
     await page.getByText(/Se identificaron \d+ condiciones/).waitFor();
+    if (await page.locator(".ai-result", { hasText: "Verificar y corregir route.evidence.verifiedAt" }).count()) {
+      throw new Error("The simulated-AI guidance still exposes an internal field path.");
+    }
     await capture(page, "04-simulated-ai-summary.png", page.locator(".ai-card"));
 
     await page.getByLabel("Responsable").selectOption({ label: "Operaciones clínicas" });

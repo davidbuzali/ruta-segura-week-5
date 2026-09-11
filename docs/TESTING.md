@@ -29,7 +29,7 @@
 | Build | TypeScript and Vite production build | `pnpm --ignore-workspace run build` | Pass |
 | Availability | Public deployment responds without authentication | HTTP request | Pass — HTTP 200 |
 
-The automated suite completed with **22 passed, 0 failed**.
+The final automated suite completed with **24 passed, 0 failed**, including two operator-label regressions added after the persona review.
 
 ## Defect found: stale simulated-AI guidance after an edit
 

@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, type FormEvent } from "react";
 import { createBlockedSyntheticCase, createCompleteSyntheticCase } from "./fixtures.ts";
 import { evaluateGate } from "./gate.ts";
+import { getIssueLabel } from "./issueLabels.ts";
 import { generateSimulatedAiSummary, type SimulatedAiSummary } from "./simulatedAi.ts";
 import {
   MAX_NOTE_LENGTH,
@@ -364,7 +365,7 @@ export default function App() {
         <aside className="decision-column" aria-label="Decisión y acciones">
           <section className={`decision-card decision-${result.decision}`} aria-live="polite">
             <p className="eyebrow">Decisión de arranque</p><h2>{result.decision === "stop" ? "DETENER PILOTO" : "LISTO PARA SIMULACIÓN DEL PILOTO"}</h2><p className="decision-warning">{result.warning}</p>
-            {result.issues.length > 0 ? <ol className="issue-list">{result.issues.slice(0, 5).map((issue) => <li key={`${issue.field}-${issue.code}`}><strong>{issue.field}</strong><span>{issue.message}</span></li>)}</ol> : <p className="all-clear">Todas las condiciones pasaron las reglas transparentes.</p>}
+            {result.issues.length > 0 ? <ol className="issue-list">{result.issues.slice(0, 5).map((issue) => <li key={`${issue.field}-${issue.code}`}><strong>{getIssueLabel(issue)}</strong><span>{issue.message}</span><small className="issue-path">Referencia técnica: {issue.field}</small></li>)}</ol> : <p className="all-clear">Todas las condiciones pasaron las reglas transparentes.</p>}
             {result.issues.length > 5 && <p className="more-issues">+ {result.issues.length - 5} condiciones adicionales</p>}
             <button type="button" className="primary-button" onClick={openFirstIssue} disabled={structuralIssues.length === 0}>Revisar primera condición</button>
           </section>

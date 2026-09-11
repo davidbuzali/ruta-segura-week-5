@@ -134,9 +134,10 @@ h3 { margin: 0 0 1rem; font-size: 1.05rem; }
 .decision-ready_for_simulation h2 { color: var(--teal); }
 .decision-warning { margin: 0.8rem 0; color: #344b62; font-size: 0.9rem; line-height: 1.5; }
 .issue-list { display: grid; gap: 0.55rem; margin: 0.85rem 0; padding: 0; list-style: none; }
-.issue-list li { display: grid; gap: 0.1rem; padding: 0.62rem 0.7rem; border-left: 3px solid #c43838; background: rgb(255 255 255 / 72%); }
-.issue-list strong { color: #8d2525; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.76rem; overflow-wrap: anywhere; }
+.issue-list li { display: grid; gap: 0.12rem; padding: 0.62rem 0.7rem; border-left: 3px solid #c43838; background: rgb(255 255 255 / 72%); }
+.issue-list strong { color: #8d2525; font-size: 0.82rem; overflow-wrap: anywhere; }
 .issue-list span { color: #425970; font-size: 0.82rem; line-height: 1.35; }
+.issue-list .issue-path { margin-top: 0.18rem; color: #718399; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.62rem; overflow-wrap: anywhere; }
 .more-issues { color: var(--slate-500); font-size: 0.8rem; }
 .all-clear { padding: 0.8rem; color: var(--teal); background: #fff; font-weight: 700; }
 .primary-button, .secondary-button, .text-button {

@@ -1,4 +1,5 @@
 import type { GateIssue, GateResult, SectionId } from "./types.ts";
+import { getIssueLabel } from "./issueLabels.ts";
 
 const SECTION_LABELS: Record<SectionId, string> = {
   funding: "Financiamiento",
@@ -51,7 +52,7 @@ export function generateSimulatedAiSummary(result: GateResult): SimulatedAiSumma
       ? `Posible contradicción para revisión humana: ${conflict.message}`
       : null,
     nextAction: firstIssue
-      ? `Verificar y corregir ${firstIssue.field}; conservar evidencia antes de reevaluar.`
+      ? `Revisar ${getIssueLabel(firstIssue).toLocaleLowerCase("es-MX")}; conservar evidencia antes de reevaluar.`
       : "Conservar el expediente sintético y documentar la confirmación humana.",
     owner: firstIssue ? SECTION_OWNERS[firstIssue.section] : "Responsable del piloto",
     disclaimer:

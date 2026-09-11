@@ -68,12 +68,24 @@
 | --- | --- | --- | --- | --- |
 | 1 | High | The next-action draft survives a case change and remains visible in a structurally complete case. | A stale instruction can be assigned to the wrong case, confusing ownership and contaminating the audit trail. | **Fix before final deployment.** |
 | 2 | High | STOP reasons do not display a responsible owner or corrective action beside each blocker. | Mariana may assign the wrong team or quit to resolve ownership elsewhere. | Retain for the next usability improvement. |
-| 3 | Medium | Decision and AI output expose internal field paths. | The operator must translate developer terminology and may misread the blocker. | Replace with human-readable labels when issue guidance is added. |
+| 3 | Medium | Decision and AI output expose internal field paths. | The operator must translate developer terminology and may misread the blocker. | Fixed after final review. |
 | 4 | Low | The ready headline says “LISTO PARA SIMULACIÓN” rather than the exact longer phrase used in the brief. | The warning prevents a live-care interpretation, but exact rubric language is less visible. | Align copy before submission. |
 
 ## Highest-risk fix applied
 
 The application now treats a next-action draft as case-scoped. When the active case changes, it clears the prior owner, action, note, validation error, and saved-action display. When the selected case has no structural blockers, the remediation form is replaced with the correct next step: human confirmation before readiness or a statement that no corrective action is pending afterward. The ready-state heading was also aligned with the brief's exact phrase: **LISTO PARA SIMULACIÓN DEL PILOTO**.
+
+## Follow-up comprehension fix
+
+The decision card now leads with human-readable Spanish condition names such as **Compromiso de financiamiento**, **Vigencia de la evidencia - Proveedor y ruta**, and **Capacidad reservada**. Internal field paths remain available only in a smaller line labeled **Referencia técnica** for auditability. The simulated-AI next action uses the same human-readable terminology instead of asking Mariana to interpret developer field paths.
+
+### Decision card after the comprehension fix
+
+![STOP result with human-readable labels](persona-assets/after-fix/03-stop-result.png)
+
+### Simulated-AI guidance after the comprehension fix
+
+![Simulated-AI guidance with human-readable labels](persona-assets/after-fix/04-simulated-ai-summary.png)
 
 ### Regression checks
 
@@ -82,12 +94,15 @@ The application now treats a next-action draft as case-scoped. When the active c
 3. Confirm that the prior note and selection are not visible.
 4. Confirm that the complete-but-unconfirmed case asks for human review, not remediation.
 5. Confirm the case and verify **LISTO PARA SIMULACIÓN DEL PILOTO** with the non-deployment warning.
+6. Confirm that the decision card and simulated-AI guidance lead with human-readable labels while technical paths remain secondary audit references.
 
-All five checks passed in a fresh headless-browser replay against the local production build. The existing 22 automated tests passed, and the Vite production build completed successfully.
+All six checks passed in a fresh headless-browser replay against the local production build. All 24 automated tests passed, and the Vite production build completed successfully.
 
 ## Before/after evidence
 
 - **Before:** `persona-assets/before-fix/06-complete-case.png` shows the stale action in the complete case.
 - **After:** `persona-assets/after-fix/06-complete-case.png` shows that the stale draft is absent and that the case has no pending corrective action.
+- **Before labels:** `persona-assets/before-fix/03-stop-result.png` shows internal paths as primary blocker labels.
+- **After labels:** `persona-assets/after-fix/03-stop-result.png` shows human-readable blocker names with paths reduced to secondary audit references.
 
 ![Complete case after the fix](persona-assets/after-fix/06-complete-case.png)

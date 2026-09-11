@@ -15,6 +15,7 @@
     "src/types.ts",
     "src/gate.ts",
     "src/fixtures.ts",
+    "src/issueLabels.ts",
     "src/simulatedAi.ts"
   ]
 }
